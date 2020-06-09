@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Welcome"
+    android:background="@drawable/welcomeback">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/welcomepic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.22000003"
+        app:srcCompat="@drawable/welcomepic" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/mobileone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/mobileone" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/mobiletwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/mobiletwo" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/mobilethree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/mobilethree" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/welcometext1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/mobiletwo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomebtnone"
+        app:layout_constraintVertical_bias="0.19999999"
+        app:srcCompat="@drawable/welcometextone" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/welcometext2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomebtnone"
+        app:layout_constraintVertical_bias="0.19"
+        app:srcCompat="@drawable/welcometexttwo" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/welcomebtnone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
+        android:src="@drawable/welcomebtnone"
+        app:layout_constraintBottom_toBottomOf="@+id/mobiletwo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomepic"
+        app:layout_constraintVertical_bias="0.18" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/welcomebtntwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:background="?android:selectableItemBackground"
+        android:src="@drawable/welcomebtntwo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomepic"
+        app:layout_constraintVertical_bias="0.18" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/termstext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcometext2"
+        app:layout_constraintVertical_bias="0.6"
+        app:srcCompat="@drawable/terms" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/permtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcometext2"
+        app:layout_constraintVertical_bias="0.39999998"
+        app:srcCompat="@drawable/perms" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/boxone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/permtext"
+        app:layout_constraintTop_toBottomOf="@+id/welcometext2"
+        app:layout_constraintVertical_bias="0.39"
+        app:srcCompat="@drawable/uncheck" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/box2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/permtext"
+        app:layout_constraintTop_toBottomOf="@+id/welcometext2"
+        app:layout_constraintVertical_bias="0.6"
+        app:srcCompat="@drawable/uncheck" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

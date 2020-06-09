@@ -1,0 +1,2 @@
+include ':app', ':mylibrary', ':scanlibrary'
+rootProject.name='IndiScan'
