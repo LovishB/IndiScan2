@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class AddPicAdapter extends RecyclerView.Adapter<AddPicAdapter.AddPicViewHolder>{
+    private int flag=1;
 
     public interface OnItemClickListener{
 
@@ -20,7 +21,7 @@ public class AddPicAdapter extends RecyclerView.Adapter<AddPicAdapter.AddPicView
     }
 
     public interface OnItemLongClickListener{
-        boolean OnItemLongClick(int position);
+        boolean OnItemLongClick(View view,int position);
     }
 
     private ArrayList<ModelAddPic> mlist;
@@ -45,7 +46,9 @@ public class AddPicAdapter extends RecyclerView.Adapter<AddPicAdapter.AddPicView
         public ImageView item_pic;
 
 
-        public AddPicViewHolder(@NonNull View itemView, final OnItemClickListener listener,final OnItemLongClickListener longlistener, Context context) {
+        public AddPicViewHolder(@NonNull final View itemView, final OnItemClickListener listener,
+                                final OnItemLongClickListener longlistener, Context context)
+        {
             super(itemView);
 
            project_id=itemView.findViewById(R.id.prject_id);
@@ -64,15 +67,18 @@ public class AddPicAdapter extends RecyclerView.Adapter<AddPicAdapter.AddPicView
                 }
             });
 
+
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     if(longlistener!=null){
                         int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION){
-                            longlistener.OnItemLongClick(position);
+                        if(position != RecyclerView.NO_POSITION) {
+                            longlistener.OnItemLongClick(v,position);
+
                         }
                     }
+
                     return true;
                 }
             });
@@ -101,13 +107,11 @@ public class AddPicAdapter extends RecyclerView.Adapter<AddPicAdapter.AddPicView
         holder.project_id.setText(currentItem.getProjectId());
         holder.pic_id.setText(currentItem.getPicId());
         holder.item_pic.setImageBitmap(currentItem.getBitmap());
-
     }
 
     @Override
     public int getItemCount() {
         return mlist.size();
     }
-    
 }
 

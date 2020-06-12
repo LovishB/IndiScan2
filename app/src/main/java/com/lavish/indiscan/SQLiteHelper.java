@@ -100,10 +100,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.delete(TABLE_NAME,"project_id = ?",new String[] {id});
     }
 
-    public void deletePic(String num){
+  public Cursor getView(int number){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_TWO,"number = ?",new String[] {num});
-    }
-
+        String query = "SELECT image FROM "+ TABLE_TWO + " WHERE number LIKE "+"'%"+number+"%'";
+        Cursor data = db.rawQuery(query,null);
+        return data;
+  }
 
 }

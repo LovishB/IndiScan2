@@ -14,10 +14,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,12 +35,14 @@ public class ProjectActivity extends AppCompatActivity {
     private ImageView mImageView;
     private ImageButton btn;
     int REQUEST_CODE = 99;
-
+    private CardView card;
+    private TextView card_text;
+    private ImageView cancel_pdf,share_selected,download_selected;
     private RecyclerView mRecyclerView;
     private AddPicAdapter mAddPicAdapter;
     private ArrayList<ModelAddPic> list;
+    private ArrayList<ModelAddPic> mlist;
     private String title, id;
-
     private SQLiteHelper mSQLiteHelper;
     private ArrayList<String> ids;
     private ArrayList<Integer> pic_nos;
@@ -58,10 +61,16 @@ public class ProjectActivity extends AppCompatActivity {
         mImageView = findViewById(R.id.project_img);
         mRecyclerView = findViewById(R.id.project_container);
         list = new ArrayList<>();
+        mlist = new ArrayList<>();
         ids = new ArrayList<>();
         pic_nos = new ArrayList<>();
         imgs = new ArrayList<>();
         mSQLiteHelper = new SQLiteHelper(this);
+        card =findViewById(R.id.card_project);
+        card_text = findViewById(R.id.card_text);
+        cancel_pdf=findViewById(R.id.appCompatImageView6);
+        share_selected=findViewById(R.id.project_share_selected);
+        download_selected=findViewById(R.id.project_download_selected);
 
         addimagestolist();
 
@@ -86,10 +95,21 @@ public class ProjectActivity extends AppCompatActivity {
                 }
                 else if(item.getItemId()== R.id.project_download)
                 {
-                    Toast.makeText(ProjectActivity.this,"Download",Toast.LENGTH_SHORT).show();
+                    if(list.size()>0){
+                        ArrayList<Bitmap> finalBitmap = new ArrayList<>();
+                        for(int i =0;i<list.size();i++){
+                            finalBitmap.add(list.get(i).mBitmap); }
+                        downloadproject(finalBitmap);
+                    }
                 }
                 else if(item.getItemId()== R.id.project_share){
-                    Toast.makeText(ProjectActivity.this,"Share",Toast.LENGTH_SHORT).show();
+                    if(list.size()>0){
+                        ArrayList<Bitmap> finalBitmap = new ArrayList<>();
+                        for(int i =0;i<list.size();i++){
+                            finalBitmap.add(list.get(i).mBitmap); }
+                        downloadproject(finalBitmap);
+                        shareproject(finalBitmap);
+                    }
                 }
 
                 return false;
@@ -103,6 +123,38 @@ public class ProjectActivity extends AppCompatActivity {
             }
         });
 
+        cancel_pdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+        });
+
+        share_selected.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mlist.size()>0){
+                    ArrayList<Bitmap> finalBitmap = new ArrayList<>();
+                    for(int i =0;i<mlist.size();i++){
+                        finalBitmap.add(mlist.get(i).mBitmap); }
+                    share_selected_images(finalBitmap);
+                }
+            }
+        });
+
+        download_selected.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mlist.size()>0){
+                    ArrayList<Bitmap> finalBitmap = new ArrayList<>();
+                    for(int i =0;i<mlist.size();i++){
+                        finalBitmap.add(mlist.get(i).mBitmap); }
+                    download_selected_images(finalBitmap);
+                }
+            }
+        });
 
     }
 
@@ -169,14 +221,30 @@ public class ProjectActivity extends AppCompatActivity {
             public void OnItemClick(int position) {
                 Intent intent = new Intent(ProjectActivity.this, ImageViewer.class);
                 intent.putExtra("PIC_NUMBER", list.get(position).PicId);
-                intent.putExtra("PIC_BITMAP",getBytes(list.get(position).mBitmap));
                 startActivity(intent);
             }
         });
 
         mAddPicAdapter.setOnItemLongClickListener(new AddPicAdapter.OnItemLongClickListener() {
             @Override
-            public boolean OnItemLongClick(int position) { ;
+            public boolean OnItemLongClick(View view, int position) {
+
+
+                if(mlist.contains(list.get(position))){
+                    mlist.remove(list.get(position));
+                    view.findViewById(R.id.select_img).setVisibility(View.INVISIBLE);
+
+                }else if(!mlist.contains(list.get(position))){
+                    mlist.add(list.get(position));
+                    view.findViewById(R.id.select_img).setVisibility(View.VISIBLE);
+
+                }
+
+                mToolbar.getMenu().clear();
+                btn.setVisibility(View.INVISIBLE);
+                card.setVisibility(View.VISIBLE);
+                card_text.setText(mlist.size()+""+"/"+list.size()+"");
+
                 return true;
             }
         });
@@ -224,5 +292,58 @@ public class ProjectActivity extends AppCompatActivity {
         });
         AlertDialog dialog2 = builder2.create();
         dialog2.show();
+    }
+
+    //download complete project
+    public void downloadproject(ArrayList<Bitmap> finalBitmaps){
+        //not working
+        /*
+        Bitmap d = BitmapFactory.decodeResource(getResources(), R.drawable.welcomeback);
+        PdfDocument pdfDocument = new PdfDocument();
+        PdfDocument.PageInfo pi = new PdfDocument.PageInfo.Builder(d.getWidth(),d.getHeight(),1).create();
+        PdfDocument.Page page = new PdfDocument().startPage(pi);
+
+        Canvas canvas = page.getCanvas();
+        Paint paint = new Paint();
+        paint.setColor(Color.parseColor("#FFFFFF"));
+        canvas.drawPaint(paint);
+
+        d = Bitmap.createScaledBitmap(d,d.getWidth(),d.getHeight(),true);
+        paint.setColor(Color.BLUE);
+        canvas.drawBitmap(d,0,0,null);
+
+        pdfDocument.finishPage(page);
+
+        // Saving File
+        File root = new File("//sdcard//Download//");
+        if(!root.exists()){
+            root.mkdir();
+        }
+        File file = new File(root,"File-"+id+list.get(0).PicId);
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            pdfDocument.writeTo(fileOutputStream);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        pdfDocument.close();
+
+         */
+    }
+
+    //share complete project
+    public void shareproject(ArrayList<Bitmap> finalBitmap){
+
+    }
+
+    //share selected images
+    public void share_selected_images(ArrayList<Bitmap> finalBitmap){
+
+    }
+
+    //download selected images
+    public  void download_selected_images(ArrayList<Bitmap> finalBitmap){
+
     }
 }

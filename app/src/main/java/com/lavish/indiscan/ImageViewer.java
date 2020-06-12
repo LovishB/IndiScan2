@@ -1,13 +1,14 @@
 package com.lavish.indiscan;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -26,7 +27,7 @@ public class ImageViewer extends AppCompatActivity {
         setContentView(R.layout.activity_image_viewer);
         Intent intent =getIntent();
         img_number =intent.getStringExtra("PIC_NUMBER");
-        img=intent.getByteArrayExtra("PIC_BITMAP");
+        //img=intent.getByteArrayExtra("PIC_BITMAP");
 
 
         mToolbar=findViewById(R.id.toolbar2);
@@ -43,6 +44,8 @@ public class ImageViewer extends AppCompatActivity {
             }
         });
 
+        gettingImagefromdatabse(img_number);
+
         iiii.setImageBitmap(getImage(img));
 
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -52,10 +55,15 @@ public class ImageViewer extends AppCompatActivity {
 
                  if(item.getItemId()== R.id.viewer_download)
                 {
-                    Toast.makeText(ImageViewer.this,"Download",Toast.LENGTH_SHORT).show();
+                    BitmapDrawable drawable = (BitmapDrawable) iiii.getDrawable();
+                    Bitmap bit = drawable.getBitmap();
+                    downloadSingleImage(bit);
                 }
                 else if(item.getItemId()== R.id.viewer_share){
-                    Toast.makeText(ImageViewer.this,"Share",Toast.LENGTH_SHORT).show();
+
+                     BitmapDrawable drawable = (BitmapDrawable) iiii.getDrawable();
+                     Bitmap bit = drawable.getBitmap();
+                     shareSingleImage(bit);
                 }
 
                 return false;
@@ -65,6 +73,25 @@ public class ImageViewer extends AppCompatActivity {
 
     public static Bitmap getImage(byte[] image) {
         return BitmapFactory.decodeByteArray(image, 0, image.length);
+    }
+
+    public void gettingImagefromdatabse(String number){
+        Cursor cursor = mSQLiteHelper.getView(Integer.parseInt(number));
+        if(cursor!=null && cursor.getCount()>0 && cursor.moveToFirst()){
+            do{
+                img = cursor.getBlob(cursor.getColumnIndex(mSQLiteHelper.IMAGE));
+            }while (cursor.moveToNext());
+            cursor.close();
+        }
+
+    }
+
+    //download image
+    public void downloadSingleImage(Bitmap bitmap){
+    }
+
+    //share image
+    public void shareSingleImage(Bitmap bitmap){
 
     }
 }
